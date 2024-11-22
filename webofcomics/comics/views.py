@@ -29,19 +29,18 @@ def register_user(request):
 def register_comic(request):
     if request.method == 'POST':
         comic_form = ComicForm(request.POST)
-        image_form = ComicImageUploadForm(request.POST, request.FILES)
+        image_form = ComicImageForm(request.POST)
         if comic_form.is_valid() and image_form.is_valid():
             comic = comic_form.save(commit=False)
             comic.seller = request.user
             comic.save()
-            images = request.FILES.getlist('images')  # Obtén todas las imágenes cargadas
-            for image in images:
-                ComicImage.objects.create(comic=comic, image=image)
+            #image = image_form.save(commit=False)
+            #ComicImage.objects.create(comic=comic, image=image)
             return redirect('home')
     else:
-        form = ComicForm()
+        comic = ComicForm()
         image_form = ComicImageForm()
-    return render(request, 'comics/register_comic.html', {'comic': form, 'image_form': image_form})
+    return render(request, 'comics/register_comic.html', {'comic': comic, 'image_form': image_form})
 
 @login_required
 def update_comic(request, comic_id):
