@@ -10,7 +10,6 @@
     {% for comic in comics %}
     <div>
       <h2><a href="{% url 'comic_detail' comic.id %}">{{ comic.title }}</a></h2>
-
       <img src="{{ comic.image.url }}" alt="{{ comic.title }}">
       <p>{{ comic.description }}</p>
       <a href="{% url 'send_message' comic.id %}">Send Message</a>
