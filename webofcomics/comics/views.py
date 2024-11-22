@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .models import Comic, Wishlist, Notification, Message
-from .forms import ComicForm, MessageForm
+from django.db.models import Q
+from .models import Comic, Wishlist, Notification, Message, ComicImage
+from .forms import ComicForm, MessageForm, ComicImageForm
 from .forms import UserRegistrationForm
 
 @login_required
 def home(request):
+    print(request.GET.get('q'))
+    query = request.GET.get('q')
     comics = Comic.objects.all()
-    return render(request, 'comics/home.html', {'comics': comics})
+    if query:
+        comics = comics.filter(title__icontains=query)
+    return render(request, 'home.html', {'comics': comics})
 
 def register_user(request):
     if request.method == 'POST':
@@ -23,15 +28,20 @@ def register_user(request):
 @login_required
 def register_comic(request):
     if request.method == 'POST':
-        form = ComicForm(request.POST, request.FILES)
-        if form.is_valid():
-            comic = form.save(commit=False)
+        comic_form = ComicForm(request.POST)
+        image_form = ComicImageUploadForm(request.POST, request.FILES)
+        if comic_form.is_valid() and image_form.is_valid():
+            comic = comic_form.save(commit=False)
             comic.seller = request.user
             comic.save()
+            images = request.FILES.getlist('images')  # Obtén todas las imágenes cargadas
+            for image in images:
+                ComicImage.objects.create(comic=comic, image=image)
             return redirect('home')
     else:
         form = ComicForm()
-    return render(request, 'comics/register_comic.html', {'form': form})
+        image_form = ComicImageForm()
+    return render(request, 'comics/register_comic.html', {'comic': form, 'image_form': image_form})
 
 @login_required
 def update_comic(request, comic_id):
