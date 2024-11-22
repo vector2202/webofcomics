@@ -1,12 +1,25 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .models import Comic, Wishlist, Notification, Message
 from .forms import ComicForm, MessageForm
+from .forms import UserRegistrationForm
 
+@login_required
 def home(request):
     comics = Comic.objects.all()
     return render(request, 'comics/home.html', {'comics': comics})
 
+def register_user(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user) 
+            return redirect('home')
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'register.html', {'form': form})
 @login_required
 def register_comic(request):
     if request.method == 'POST':
@@ -21,11 +34,56 @@ def register_comic(request):
     return render(request, 'comics/register_comic.html', {'form': form})
 
 @login_required
+def update_comic(request, comic_id):
+    comic = get_object_or_404(Comic, id=comic_id)
+    if comic.seller != request.user:
+        return redirect('home')
+    if request.method == 'POST':
+        form = ComicForm(request.POST, request.FILES, instance=comic)
+        if form.is_valid():
+            form.save()
+            return redirect('comic_detail', comic_id=comic.id)
+    else:
+        form = ComicForm(instance=comic)
+
+    return render(request, 'update_comic.html', {'form': form, 'comic': comic})
+@login_required
+def delete_comic(request, comic_id):
+    comic = get_object_or_404(Comic, id=comic_id)
+    if comic.seller != request.user:
+        return redirect('home')
+
+    if request.method == 'POST':
+        comic.delete()
+        return redirect('home')
+
+    return render(request, 'comics/delete_comic.html', {'comic': comic})
+
+@login_required
+def comic_detail(request, comic_id):
+    comic = get_object_or_404(Comic, id=comic_id)
+    return render(request, 'comic_detail.html', {'comic': comic})
+
+@login_required
+def wishlist(request):
+    wishlist = request.user.wishlist
+    wishlist_items = wishlist.comics.filter(id__isnull=False) 
+    print(f"Wishlist items: {wishlist_items}")
+    return render(request, 'wishlist.html', {'wishlist_items': wishlist_items})
+
+@login_required
 def add_to_wishlist(request, comic_id):
     comic = Comic.objects.get(id=comic_id)
     wishlist, created = Wishlist.objects.get_or_create(user=request.user)
     wishlist.comics.add(comic)
     return redirect('home')
+@login_required
+def remove_from_wishlist(request, comic_id):
+    comic = get_object_or_404(Comic, id=comic_id)
+    wishlist = Wishlist.objects.filter(user=request.user).first()
+    if wishlist:
+        wishlist.comics.remove(comic)  # Usa el campo ManyToManyField
+    return redirect('wishlist')
 
 @login_required
 def send_message(request, comic_id):

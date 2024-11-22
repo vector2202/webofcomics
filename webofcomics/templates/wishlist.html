@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wish list</title>
+  </head> 
+  <body>
+    <h1>Lista de deseos</h1>
+    {% if wishlist_items %}
+    <ul class="list-group">
+      {% for item in wishlist_items %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <h2><a href="{% url 'comic_detail' item.id %}">{{ item.title }}</a></h2>
+
+          <p>{{ item.description }}</p>
+        </div>
+        <!-- Botón para eliminar de la lista de deseos -->
+        {% if item.id %}
+            <form action="{% url 'remove_from_wishlist' item.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+        {% else %}
+            <p>Error: Este cómic no tiene un ID válido.</p>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No tienes cómics en tu lista de deseos aún. ¡Empieza a agregar algunos!</p>
+    {% endif %}
+
+    <!-- Botón para regresar al home -->
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Regresar al Home</a>
+
+  </body>
+</html>    

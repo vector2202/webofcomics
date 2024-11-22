@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ comic.title }}</title>
+  </head>
+  <body>
+    <h1>{{ comic.title }}</h1>
+    <p><strong>Autor:</strong> {{ comic.author }}</p>
+    <p><strong>Precio:</strong> ${{ comic.price }}</p>
+    <p><strong>Descripción:</strong> {{ comic.description }}</p>
+    {% if comic.image %}
+    <img src="{{ comic.image.url }}" alt="{{ comic.title }}" style="width: 300px; height: auto;">
+    {% else %}
+    <p>No hay imagen disponible para este cómic.</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'add_to_wishlist' comic.id %}" method="post" style="display: inline;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success">Agregar a Lista de Deseos</button>
+    </form>
+    {% endif %}
+    {% if user == comic.seller %}
+    <a href="{% url 'update_comic' comic.id %}" class="btn btn-primary">Modificar</a>
+    <form action="{% url 'delete_comic' comic.id %}" method="post" style="display: inline;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Eliminar</button>
+    </form>
+    {% endif %}
+
+    <a href="{% url 'home' %}">Volver al Home</a>
+  </body>
+</html>
