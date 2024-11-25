@@ -8,7 +8,6 @@ from .forms import UserRegistrationForm
 
 @login_required
 def home(request):
-    print(request.GET.get('q'))
     query = request.GET.get('q')
     comics = Comic.objects.all()
     if query:
@@ -68,14 +67,14 @@ def delete_comic(request, comic_id):
 @login_required
 def comic_detail(request, comic_id):
     comic = get_object_or_404(Comic, id=comic_id)
-    return render(request, 'comic_detail.html', {'comic': comic})
+    return render(request, 'detail/comic_detail.html', {'comic': comic})
 
 @login_required
 def wishlist(request):
     wishlist = request.user.wishlist
     wishlist_items = wishlist.comics.filter(id__isnull=False) 
     print(f"Wishlist items: {wishlist_items}")
-    return render(request, 'wishlist.html', {'wishlist_items': wishlist_items})
+    return render(request, 'wishlist/wishlist.html', {'wishlist_items': wishlist_items})
 
 @login_required
 def add_to_wishlist(request, comic_id):

@@ -1,0 +1,101 @@
+body {
+  height: 100vh;
+  font-family: 'Bangers', sans-serif;
+}
+
+/* Fondo */
+.bg-custom {
+  background-color: #8dd7f0 !important;
+  background-image: url('../images/fondo.png') !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%; 
+
+}
+
+.bangers-regular {
+  font-family: "Bangers", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h2 {
+  font-size: 1.5rem; 
+  color: #343a40;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  transition: all 0.3s ease-in-out; 
+}
+
+.card:hover {
+  transform: translateY(-10px); /* saltito */
+  box-shadow: #000000;
+}
+
+.btn-danger {
+  letter-spacing: 1px; 
+  font-weight: 300; 
+}
+
+
+#main-image {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  height: auto; 
+  text-align: center;
+
+}
+
+#main-image img {
+  max-width: 55%; /*responsiva */
+  height: auto; 
+  margin-top: 20px; 
+}
+
+#main-image h1 {
+  font-size: 2.5rem; 
+  margin-bottom: 10px; 
+  color: #000000; 
+}
+
+#trueque {
+  text-align: center; 
+  margin-top: 20px; 
+  letter-spacing: 1px; 
+
+}
+
+#trueque .btn {
+  font-size: 16px; 
+  font-weight: 300; 
+  color: #000000; 
+  background-color: #47c8eb; 
+  border-radius: 10px; 
+  transition: all 0.3s ease-in-out; 
+  letter-spacing: 1px; 
+}
+
+#trueque .btn:hover {
+  background-color: #6bfe16; 
+  color: #ffffff; /* texto  */
+  box-shadow: black; 
+  letter-spacing: 3px; 
+
+}
+
+#trueque .btn:active {
+  transform: scale(0.95); /* Efecto de clic */
+  letter-spacing: 1px; 
+}
