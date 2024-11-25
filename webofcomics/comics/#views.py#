@@ -126,7 +126,6 @@ def messages_list(request):
 
 @login_required
 def messages_with_user_comic(request, user_id, comic_id):
-    
     selected_user = get_object_or_404(User, id=user_id)
     selected_comic = get_object_or_404(Comic, id=comic_id)
     messages = Message.objects.filter(

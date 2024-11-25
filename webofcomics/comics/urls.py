@@ -16,6 +16,8 @@ urlpatterns = [
     path('add_to_wishlist/<int:comic_id>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('remove_from_wishlist/<int:comic_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('send_message/<int:comic_id>/', views.send_message, name='send_message'),
+    path('messages/', views.messages_list, name='messages_list'),
+    path('messages/<int:user_id>/<int:comic_id>/', views.messages_with_user_comic, name='messages_with_user_comic'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
 ]
 

@@ -122,20 +122,27 @@
 	      {% endif %}
               <li><hr class="dropdown-divider" />
 		<!-- Botón de notificaciones dentro del dropdown -->
-		<button type="button" class="dropdown-item">
-                  Mensajes
-                  <span
-                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
-                    >
-                    <span class="visually-hidden">New alerts</span>
-                  </span>
+		<button 
+		  type="button" 
+		  class="dropdown-item" 
+		  onclick="location.href='{% url 'messages_list' %}'">
+		  Mensajes
+		  <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+		    <span class="visually-hidden">New alerts</span>
+		  </span>
 		</button>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
 		<!-- Botón de cerrar sesión dentro del dropdown-->
-		<a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
-	  </li>
+		<form action="{% url 'logout' %}" method="post" class="dropdown-item">
+		  {% csrf_token %}
+		  <button type="submit" style="background: none; border: none; padding: 0; color: inherit; cursor: pointer;">
+		    Cerrar sesión
+		  </button>
+		</form>
+
+	      </li>
               
             </ul>
           </div>
