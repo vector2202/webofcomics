@@ -13,7 +13,7 @@ def home(request):
     comics = Comic.objects.all()
     if query:
         comics = comics.filter(title__icontains=query)
-    return render(request, 'home.html', {'comics': comics})
+    return render(request, 'home/home.html', {'comics': comics})
 
 def register_user(request):
     if request.method == 'POST':
