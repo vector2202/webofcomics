@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Mensajes</title>
+    <style>
+        .conversations {
+            display: flex;
+        }
+        .conversations-list {
+            width: 30%;
+            border-right: 1px solid #ccc;
+            padding: 10px;
+        }
+        .message-area {
+            width: 70%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mis Mensajes</h1>
+    <div class="conversations">
+      <a href="{% url 'home' %}">Regresar a la página principal</a>
+      <a href="{% url 'messages_list' %}">muestrame los mensajes</a>
+        <!-- Lista de conversaciones por usuario y cómic -->
+        <div class="conversations-list">
+            <h2>Conversaciones</h2>
+            <ul>
+                {% for conversation in conversations %}
+                    <li>
+                        <a href="{% url 'messages_with_user_comic' conversation.user.id conversation.comic.id %}">
+                            {{ conversation.user.username }} - {{ conversation.comic.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- Mensajes en la conversación seleccionada -->
+        <div class="message-area">
+            {% if selected_user and selected_comic %}
+                <h2>Conversación con {{ selected_user.username }} sobre "{{ selected_comic.title }}"</h2>
+                <div>
+                    {% for message in messages %}
+                        <p><strong>{{ message.sender.username }}:</strong> {{ message.text }}</p>
+                        {% if message.image %}
+                            <img src="{{ message.image.url }}" alt="Adjunto" width="200">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <textarea name="text" rows="4" cols="50" placeholder="Escribe tu mensaje aquí"></textarea>
+                    <br>
+                    <input type="file" name="image">
+                    <button type="submit">Enviar</button>
+                </form>
+            {% else %}
+                <p>Selecciona un usuario y un cómic para ver los mensajes.</p>
+		{% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
