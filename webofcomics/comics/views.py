@@ -30,6 +30,8 @@ def register_comic(request):
     if request.method == 'POST':
         comic_form = ComicForm(request.POST, request.FILES)
         print(comic_form)
+        print(comic_form)
+        print("Form errors:", comic_form.errors)
         if comic_form.is_valid():
             print("Saving comic")
             comic = comic_form.save(commit=False)
@@ -38,7 +40,7 @@ def register_comic(request):
             return redirect('home')
     else:
         comic_form = ComicForm()
-    return render(request, 'comics/register_comic.html', {'comic': comic_form})
+    return render(request, 'comics/register_comic.html', {'form': comic_form})
 
 @login_required
 def update_comic(request, comic_id):
@@ -47,12 +49,15 @@ def update_comic(request, comic_id):
         return redirect('home')
     if request.method == 'POST':
         form = ComicForm(request.POST, request.FILES, instance=comic)
+        print("UPDATE")
+        print("Form errors:", form.errors)
+        
         if form.is_valid():
             form.save()
             return redirect('comic_detail', comic_id=comic.id)
     else:
         form = ComicForm(instance=comic)
-    return render(request, 'update_comic.html', {'form': form, 'comic': comic})
+    return render(request, 'comics/update_comic.html', {'form': form, 'comic': comic})
 
 @login_required
 def delete_comic(request, comic_id):
