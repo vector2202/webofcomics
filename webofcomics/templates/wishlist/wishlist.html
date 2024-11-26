@@ -126,7 +126,12 @@
               <li><hr class="dropdown-divider" /></li>
               <li>
 		<!-- Botón de cerrar sesión dentro del dropdown-->
-		<a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
+		<form action="{% url 'logout' %}" method="post" class="dropdown-item">
+		  {% csrf_token %}
+		  <button type="submit" style="background: none; border: none; padding: 0; color: inherit; cursor: pointer;">
+		    Cerrar sesión
+		  </button>
+		</form>
 	  </li>
               
             </ul>
