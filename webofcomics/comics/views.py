@@ -23,7 +23,7 @@ def register_user(request):
             return redirect('home')
     else:
         form = UserRegistrationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'login/register/register.html', {'form': form})
 
 @login_required
 def register_comic(request):
