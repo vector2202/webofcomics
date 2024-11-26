@@ -144,18 +144,18 @@
     <!-- Página principal-->
 
     {% if wishlist_items %}
-    <ul class="list-group">
-      {% for item in wishlist_items %}
     <div class="d-flex align-items-center justify-content-center">
       <h1 class="m-2">
         Lista de Deseados
       </h1>
     </div>
-    <div class="container">
+    <ul class="list-group">
+      <div class="container">
         <!-- Tarjetas -->
         <div class="container my-5">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
-
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+            
+            {% for item in wishlist_items %}
                 <!-- Tarjeta -->
                 <div class="col">
                     <div class="card h-100" style="width: 18rem;">
