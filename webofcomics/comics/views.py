@@ -76,8 +76,11 @@ def comic_detail(request, comic_id):
 
 @login_required
 def wishlist(request):
-    wishlist = request.user.wishlist
-    wishlist_items = wishlist.comics.filter(id__isnull=False) 
+    try:
+        wishlist = request.user.wishlist
+        wishlist_items = wishlist.comics.filter(id__isnull=False)
+    except:
+        wishlist_items = None
     print(f"Wishlist items: {wishlist_items}")
     return render(request, 'wishlist/wishlist.html', {'wishlist_items': wishlist_items})
 
