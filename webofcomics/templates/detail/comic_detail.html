@@ -297,17 +297,29 @@
                 alt="Datos de cómics"
               />
             </div>
-            <!-- Botón alineado abajo -->
-            <div id="trueque" class="text-center">
+            <!-- Botón de Agregar Trueque abajo -->
+            <div id="trueque" class="text-center mb-3">
               <button type="button" class="btn btn-outline-primary">
                 Agregar Trueque
               </button>
             </div>
-	    {% if user == comic.seller %}
-    <a href="{% url 'update_comic' comic.id %}" class="btn btn-primary">Modificar</a>
-    <form action="{% url 'delete_comic' comic.id %}" method="post" style="display: inline;">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-danger">Eliminar</button>
+            <!-- Botones de Modificar y Eliminar -->
+	  {% if user == comic.seller %}
+            <div class="text-center d-flex justify-content-center gap-3">
+              <form action="{% url 'delete_comic' comic.id %}" method="post" style="display: inline">
+                <!-- <form action="{% url 'delete_comic' comic.id %}" method="post" style="display: inline;"></form> -->
+                <!--{% csrf_token %}-->
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">
+                  Eliminar
+                </button>
+                <!-- <button type="submit" class="btn btn-danger">Eliminar</button> -->
+              </form>
+              <a href="{% url 'update_comic' comic.id %}" class="btn btn-primary btn-sm">
+                Modificar
+              </a>
+              <!-- <a href="{% url 'update_comic' comic.id %}" class="btn btn-primary">Modificar</a> -->
+            </div>
     </form>
     {% endif %}
 

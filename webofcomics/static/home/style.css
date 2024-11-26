@@ -48,6 +48,22 @@ h2 {
   font-weight: 300; 
 }
 
+/* Efecto de que el botón se infla */
+.btn-danger:active {
+  transform: scale(1.5);
+  transition: transform 0.2s ease-in-out;
+}
+
+.btn-primary {
+  letter-spacing: 1px;
+  font-weight: 300;
+}
+
+/* Efecto de que el botón se infla */
+.btn-primary:active {
+  transform: scale(1.5);
+  transition: transform 0.2s ease-in-out;
+}
 
 #main-image {
   display: flex; 
@@ -98,4 +114,23 @@ h2 {
 #trueque .btn:active {
   transform: scale(0.95); /* Efecto de clic */
   letter-spacing: 1px; 
+}
+
+.carousel-container {
+  max-width: 400px;
+
+}
+
+.carousel-inner img {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  margin: 0 auto;
+  /* Centra la imagen dentro del contenedor */
+}
+
+.img-datos {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
 }
