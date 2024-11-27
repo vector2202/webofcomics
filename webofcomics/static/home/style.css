@@ -134,3 +134,89 @@ h2 {
   height: auto;
   object-fit: contain;
 }
+
+/* Espacio de conversacion*/
+.chat {
+  --rad: 20px;
+  --rad-sm: 3px;
+  font: 16px/1.5 sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 500px;
+  max-height: 400px;
+  margin: auto;
+}
+
+/* Imagenes en conversacion*/
+.msg-img {
+  width: 100%; 
+  height: auto;
+  max-width: 200px;
+  border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
+}
+
+/* Globos de conversacion*/
+.msg-space {
+  font-family: 'Arial', sans-serif;
+}
+
+.msg {
+  position: relative;
+  max-width: 75%;
+  padding: 7px 15px;
+  margin-bottom: 2px;
+}
+
+.msg.sent {
+  border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
+  background: #60b7ff;
+  color: #fff;
+  margin-left: auto;
+}
+
+.msg.rcvd {
+  border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
+  background: #ff9393;
+  color: #555;
+  margin-right: auto;
+}
+
+
+.msg.sent:first-child,
+.msg.rcvd+.msg.sent {
+  border-top-right-radius: var(--rad);
+}
+
+.msg.rcvd:first-child,
+.msg.sent+.msg.rcvd {
+  border-top-left-radius: var(--rad);
+}
+
+/* nombre usuario opuesto */
+.msg::before {
+  content: attr(data-time);
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 100%;
+  color: #888;
+  white-space: nowrap;
+  
+  display: none;
+}
+
+.msg.sent::before {
+  right: 15px;
+}
+
+.msg.rcvd::before {
+  left: 15px;
+}
+
+/* Nombre solo para el primer mensaje de grupo */
+
+.msg:first-child::before,
+.msg.sent+.msg.rcvd::before,
+.msg.rcvd+.msg.sent::before {
+  display: block;
+}
