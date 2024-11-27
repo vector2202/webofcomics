@@ -113,7 +113,7 @@ def send_message(request, comic_id):
             return redirect('home')
     else:
         form = MessageForm()
-    return render(request, 'send_message.html', {'form': form, 'comic': comic})
+    return render(request, 'messages/send_message.html', {'form': form, 'comic': comic})
 
 
 @login_required
