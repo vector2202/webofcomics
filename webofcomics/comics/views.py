@@ -128,7 +128,7 @@ def messages_list(request):
         other_user = User.objects.get(id=other_user_id)  # Obtener el usuario completo
         comic = Comic.objects.get(id=convo['comic'])  # Obtener el cómic completo
         conversations_cleaned.append({'user': other_user, 'comic': comic})
-    return render(request, 'message_list.html', {
+    return render(request, 'messages/message_list.html', {
         'conversations': conversations_cleaned,
     })
 
@@ -156,7 +156,7 @@ def messages_with_user_comic(request, user_id, comic_id):
 
     
 
-    return render(request, 'message_list.html', {
+    return render(request, 'messages/message_list.html', {
         'selected_user': selected_user,
         'selected_comic': selected_comic,
         'messages': messages
