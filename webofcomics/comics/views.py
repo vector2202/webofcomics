@@ -102,6 +102,9 @@ def remove_from_wishlist(request, comic_id):
 @login_required
 def send_message(request, comic_id):
     comic = Comic.objects.get(id=comic_id)
+    wishlist, _ = Wishlist.objects.get_or_create(user=request.user)
+    if comic not in wishlist.comics.all():
+        wishlist.comics.add(comic)
     if request.method == 'POST':
         form = MessageForm(request.POST, request.FILES)
         if form.is_valid():

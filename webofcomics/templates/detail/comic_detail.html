@@ -304,9 +304,9 @@
             </div>
             <!-- Botón de Agregar Trueque abajo -->
             <div id="trueque" class="text-center mb-3">
-              <button type="button" class="btn btn-outline-primary">
-                Enviar mensaje
-              </button>
+              <a href="{% url 'send_message' comic.id %}" class="btn btn-outline-light">
+		Enviar mesaje
+	      </a>
             </div>
             <!-- Botones de Modificar y Eliminar -->
 	  {% if user == comic.seller %}
