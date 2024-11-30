@@ -114,7 +114,7 @@
 	      {% endif %}
               <li><hr class="dropdown-divider" />
 		<!-- Botón de notificaciones dentro del dropdown -->
-		<button type="button" class="dropdown-item">
+		<button type="button" class="dropdown-item" onclick="location.href='{% url 'messages_list' %}'">>
                   Mensajes
                   <span
                     class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
