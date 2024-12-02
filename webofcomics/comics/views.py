@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Comic, Wishlist, Notification, Message, User
@@ -113,6 +114,7 @@ def send_message(request, comic_id):
             message.receiver = comic.seller
             message.comic = comic
             message.save()
+            messages.success(request, f"Mensaje enviado a {comic.seller}")
             return redirect('home')
     else:
         form = MessageForm()
